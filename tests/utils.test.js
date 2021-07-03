@@ -26,7 +26,23 @@ it("should say hello", function() {
 // This is called "Red-Green-Refactor"
 // ========================================================
 
+it("should return the area of a rectangle", function() {
+  const area = utils.area(3,5);
+  expect(area).to.be.a("number");
+  expect(area).to.be.equal(15);
+});
 
+it("should return the perimeter", function() {
+  const perimeter = utils.perimeter(4,8);
+  expect(perimeter).to.be.a("number");
+  expect(perimeter).to.be.equal(4 + 4 + 8 + 8);
+});
+
+it("should return the area of a circle", function() {
+  const circleArea = utils.circleArea(2);
+  expect(cicleArea).to.be.a("number");
+  expect(circleArea).to.be.equal(2 * 2 * Math.PI);
+});
 
 
 // ========================================================
@@ -38,26 +54,53 @@ it("should say hello", function() {
 // ========================================================
 
 beforeEach((done) => {
-  utils.clearCart()
-  done()
-})
+  utils.clearCart();
+  done();
+});
 
 it("Should create a new (object) Item with name and price", function() {
-  const item = utils.createItem("apple", 0.99)
-  expect(item).to.be.a("object")
-  expect(item).to.have.property("name", "apple")
-  expect(item).to.have.property("price", 0.99)
-  expect(item).to.have.property("quantity", 1)
-})
+  const item = utils.createItem("apple", 0.99);
+  expect(item).to.be.a("object");
+  expect(item).to.have.property("name", "apple");
+  expect(item).to.have.property("price", 0.99);
+  expect(item).to.have.property("quantity", 1);
+});
 
-it("Should return an array containing all items in cart")
+it("Should return an array containing all items in cart", function() {
+    const cart = utils.getShoppingCart();
+    expect(cart).to.be.an("array");
+    expect(cart).to.empty;
 
-it("Should add a new item to the shopping cart")
+    const newItem = utils.createItem("apple", 0.99);
+    utils.addItemToCart(newItem);
+    expect(cart).to.be.an("array");
+    expect(cart).to.have.length(1);
+});
 
-it("Should return the number of items in the cart")
+it("Should add a new item to the shopping cart", function() {
+    const newItem = utils.createItem("apple", 0.99);
+    utils.addItemToCart(newItem);
+    const cart = utils.getNumItemsInCart();
+    expect(cart).to.equal(1);
+});
 
-it("Should remove items from cart")
+it("Should return the number of items in the cart", function() {
+    const newItem = utils.createItem("apple", 0.99);
+    utils.addItemToCart(newItem);
+    const cart = utils.getNumItemsInCart();
+    expect(cart).to.equal(1);
+});
 
+it("Should remove items from cart", function() {
+    const newItem = utils.createItem("apple", 0.99);
+    utils.addItemToCart(newItem);
+    var cart = utils.getNumItemsInCart();
+    expect(cart).to.equal(1);
+    utils.removeItemFromCart(newItem);
+
+    cart = utils.getNumItemsInCart();
+    expect(cart).to.equal(0);
+});
 // ========================================================
 // Stretch Challenges
 // ========================================================
